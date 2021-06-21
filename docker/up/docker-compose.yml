@@ -1,0 +1,20 @@
+version: "3.5"
+services:
+  https-portal:
+    container_name: "https-portal"
+    image: steveltn/https-portal:1
+    ports:
+      - "80"
+      - "443"
+    restart: always
+    links:
+      - web-proxy
+    environment:
+      DOMAINS: "DOMAIN" -> http://127.0.0.1:8080" #ドメインとルーティング先
+      STAGE: "local" #production
+      # FORCE_RENEW: "true"
+      CLIENT_MAX_BODY_SIZE: 64M
+      WEBSOCKET: "true"
+    network_mode: "host"
+    volumes:
+      - /data/ssl_certs:/var/lib/https-portal
